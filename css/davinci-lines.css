@@ -1,0 +1,274 @@
+/* ==========================================================================
+   THE ODYSSEY - DA VINCI SACRED GEOMETRY & BLUEPRINT LINES
+   Crystalline Sunlight-on-Water Reflection Theme (Pure Radiant White, Caustic Silver & Water Shimmer)
+   ========================================================================== */
+
+:root {
+  --davinci-gold: rgba(255, 255, 255, 0.35);
+  --davinci-gold-bright: rgba(255, 255, 255, 0.95);
+  --davinci-gold-dim: rgba(224, 242, 254, 0.16);
+  --davinci-line-stroke: rgba(255, 255, 255, 0.2);
+  --davinci-grid-color: rgba(255, 255, 255, 0.04);
+}
+
+.davinci-bg-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: 
+    linear-gradient(to right, var(--davinci-grid-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--davinci-grid-color) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(circle at center, black 40%, transparent 85%);
+  -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 85%);
+  z-index: 1;
+}
+
+.davinci-lines-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 2;
+}
+
+.davinci-lines-svg path,
+.davinci-lines-svg line,
+.davinci-lines-svg circle,
+.davinci-lines-svg rect {
+  vector-effect: non-scaling-stroke;
+  transition: stroke 0.4s ease, stroke-opacity 0.4s ease, stroke-width 0.4s ease;
+}
+
+.line-golden {
+  stroke: var(--davinci-gold);
+  stroke-width: 1px;
+}
+
+.line-golden-dim {
+  stroke: var(--davinci-gold-dim);
+  stroke-width: 1px;
+}
+
+.line-dashed {
+  stroke: var(--davinci-gold);
+  stroke-width: 1px;
+  stroke-dasharray: 4 4;
+}
+
+.line-dashed-fast {
+  stroke: var(--davinci-gold-bright);
+  stroke-width: 1px;
+  stroke-dasharray: 6 6;
+  animation: dashMove 20s linear infinite;
+}
+
+@keyframes dashMove {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+.circle-concentric {
+  stroke: var(--davinci-gold-dim);
+  stroke-width: 0.85px;
+  fill: none;
+  opacity: 0.45;
+  animation: rotateSlow 60s linear infinite;
+  transform-origin: center;
+}
+
+.circle-golden-ratio {
+  stroke: var(--davinci-gold);
+  stroke-width: 1px;
+  fill: none;
+  opacity: 0.6;
+}
+
+@keyframes rotateSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Golden Spiral / Nautilus SVG curve (Crystalline Sunlight Gradient) */
+.golden-spiral {
+  stroke: url(#goldGradient);
+  stroke-width: 1.5px;
+  fill: none;
+  stroke-linecap: round;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawSpiral 4s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.5s;
+}
+
+@keyframes drawSpiral {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Technical Blueprint Annotations */
+.blueprint-marker {
+  position: absolute;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.75);
+  pointer-events: none;
+  text-transform: uppercase;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.blueprint-marker::before {
+  content: '+';
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.blueprint-coords {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.1em;
+}
+
+/* Dynamic Connection Lines Canvas / SVG Overlay */
+.connection-network-container {
+  position: relative;
+  width: 100%;
+  min-height: 520px;
+  padding: 40px 0;
+  overflow: visible;
+}
+
+.connection-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  overflow: visible;
+}
+
+.connection-svg line {
+  stroke: rgba(255, 255, 255, 0.25);
+  stroke-width: 1.2px;
+  stroke-dasharray: 4 4;
+  transition: all 0.35s ease;
+}
+
+.connection-svg line.active-connection {
+  stroke: #ffffff;
+  stroke-width: 2px;
+  stroke-dasharray: none;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 16px rgba(186, 230, 253, 0.8));
+}
+
+/* Skill / Concept Tags Network */
+.skills-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 24px 32px;
+  position: relative;
+  z-index: 10;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.skill-tag-node {
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+
+.skill-tag-node:hover {
+  transform: translateY(-4px) scale(1.05);
+}
+
+.skill-tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(18, 22, 30, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+  padding: 10px 22px;
+  color: #f1f5f9;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-tag-pill::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s ease;
+}
+
+.skill-tag-pill:hover::before {
+  left: 100%;
+}
+
+.skill-tag-pill:hover,
+.skill-tag-pill.active {
+  background: rgba(28, 34, 46, 0.95);
+  border-color: #ffffff;
+  color: #ffffff;
+  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.3), inset 0 0 14px rgba(255, 255, 255, 0.2);
+}
+
+.skill-tag-pill .tag-prefix {
+  color: #ffffff;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 0.95em;
+}
+
+.skill-tag-pill .tag-icon {
+  width: 16px;
+  height: 16px;
+  stroke: #ffffff;
+  transition: transform 0.3s ease;
+}
+
+.skill-tag-pill:hover .tag-icon {
+  transform: rotate(45deg) scale(1.15);
+  stroke: #ffffff;
+}
+
+/* Floating status pulse tick (replaces round dot) */
+.pulse-dot {
+  width: 3px;
+  height: 10px;
+  border-radius: 1px;
+  background: #ffffff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.95);
+  display: inline-block;
+  animation: pulseLaser 1.5s infinite ease-in-out;
+}

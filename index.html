@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE ODYSSEY | A Film by Christopher Nolan</title>
+  <meta name="description" content="Experience the dynamic cinematic universe of Christopher Nolan's The Odyssey. Interactive bow physics, IMAX 70mm reels, and Da Vinci sacred geometry.">
+  
+  <!-- Fonts: Authentic Christopher Nolan Poster & Film Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@300;400;500;700&family=Montserrat:wght@300;400;500;600;700;800;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/davinci-lines.css">
+  <link rel="stylesheet" href="./css/responsive.css">
+</head>
+<body>
+
+  <!-- Film Grain Atmosphere & Screen Flash -->
+  <div class="film-grain" aria-hidden="true"></div>
+  <div class="shockwave-flash" id="shockwaveFlash" aria-hidden="true"></div>
+
+  <!-- Header Navigation -->
+  <header class="site-header">
+    <a href="#cinemaTrack" class="brand-logo">
+      <span class="brand-title">THE ODYSSEY</span>
+      <span class="brand-subtitle">A Christopher Nolan Film</span>
+    </a>
+
+    <ul class="nav-chapters">
+      <li><a href="#cinemaTrack" class="nav-link"><span class="num">01.</span> The Bow & Reel</a></li>
+      <li><a href="#artifactsSection" class="nav-link"><span class="num">02.</span> Relics of War</a></li>
+      <li><a href="#skillsSection" class="nav-link"><span class="num">03.</span> Sacred Matrix</a></li>
+      <li><a href="#vaultSection" class="nav-link"><span class="num">04.</span> Vault</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <div class="imax-badge">
+        <span class="dot"></span>
+        <span>IMAX 70MM</span>
+      </div>
+      <button class="audio-btn" id="audioToggleBtn" aria-label="Toggle Soundscape" type="button">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       SECTION 1: UNIFIED CINEMA SCROLL TRACK (HERO BOW -> FULL 100% VIDEO SCRUB)
+       ========================================================================= -->
+  <section class="cinema-scroll-track" id="cinemaTrack">
+    <div class="cinema-sticky-viewport">
+      
+      <!-- Video Layer (Controlled Bidirectionally by Scroll Up/Down) -->
+      <div class="cinema-video-layer" id="cinemaVideoLayer">
+        <video id="mainVideo" class="cinema-fullscreen-video" src="./odyssey 1.mp4" playsinline muted preload="auto"></video>
+        <div class="cinema-ambient-vignette"></div>
+
+        <!-- Video HUD Controls (Reel switcher & Scrubber Sync) -->
+        <div class="video-hud-overlay">
+          <div class="video-hud-left">
+            <div class="reel-switcher-pill" id="reelSwitcherPill">
+              <button class="reel-pill-btn active" data-reel="0" type="button">Reel I: Trojan Shore</button>
+              <button class="reel-pill-btn" data-reel="1" type="button">Reel II: Siren Seas</button>
+              <button class="reel-pill-btn" data-reel="2" type="button">Reel III: Hall of Ithaca</button>
+            </div>
+          </div>
+          <div class="video-hud-right">
+            <div class="playback-indicator">
+              <span class="pulse-dot"></span>
+              <span id="scrollProgressText">REEL SYNC: 0%</span>
+            </div>
+            <button class="ctrl-btn-mini" id="videoSoundBtn" aria-label="Toggle Video Audio" type="button">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                <line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Dynamic Scrolling Nolan Typography Overlay Cards -->
+        <div class="scroll-titles-container" id="scrollTitlesContainer">
+          <div class="scroll-title-card" data-step="1" id="scrollTitle1">
+            <span class="step-tag">ACT I // THE SIEGE OF TROY</span>
+            <h2>TIME IS THE ONLY ODYSSEY</h2>
+            <p>"10 years trapped in the geometry of war. The arrow leaves the bow, searching for home."</p>
+          </div>
+          <div class="scroll-title-card" data-step="2" id="scrollTitle2">
+            <span class="step-tag">ACT II // THE OCEAN OF CHRONOS</span>
+            <h2>ACROSS UNFORGIVING SEAS</h2>
+            <p>"Where sirens bend soundwaves and monsters lurk in the folding depths of memory."</p>
+          </div>
+          <div class="scroll-title-card" data-step="3" id="scrollTitle3">
+            <span class="step-tag">ACT III // THE RETURN TO ITHACA</span>
+            <h2>DEFY THE GODS</h2>
+            <p>"Only he who can master temporal inertia may bend the great bow of Ithaca."</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overlapping Landing Image Layer (odyssey 1.jpeg + Bow Canvas + Left-Aligned Text) -->
+      <div class="stage-image-layer" id="stageImageLayer">
+        <div class="hero-bg-container">
+          <img src="./odyssey 1.jpeg" alt="The Great Bow of Odysseus standing among ancient ruins of Troy" class="hero-bg-image" id="heroBgImg">
+          <div class="hero-vignette"></div>
+        </div>
+
+        <!-- 2D Interactive Physics Bowstring Canvas (Glassy White Reflection) -->
+        <canvas id="bowCanvas"></canvas>
+
+        <!-- Left-Aligned Christopher Nolan Poster Typography -->
+        <div class="hero-content left-aligned" id="heroContent">
+          <div class="director-tag">A FILM BY CHRISTOPHER NOLAN</div>
+          <h1 class="hero-title">THE ODYSSEY</h1>
+          <p class="hero-tagline">
+            10 years in the siege of Troy. 10 years lost in the labyrinth of time. Only one man can string the bow.
+          </p>
+
+          <div class="bow-hud left-aligned">
+            <button class="bow-prompt-pill" id="engageBowBtn" type="button">
+              <svg class="prompt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+              <span>Hold & Draw String — Or Scroll Down to Play Reel</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Scroll Guidance Indicator -->
+        <div class="scroll-indicator" id="scrollIndicator">
+          <div class="scroll-mouse-icon">
+            <div class="scroll-mouse-wheel"></div>
+          </div>
+          <span>Scroll to Scrub Video Forward & Backward</span>
+        </div>
+      </div>
+
+      <!-- Golden Transition Veil -->
+      <div class="glowing-transition-veil" id="transitionVeil"></div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECTION 2: CHAPTER III • RELICS OF THE SIEGE (Appears ONLY AFTER Video Ends)
+       ========================================================================= -->
+  <section class="artifacts-section" id="artifactsSection">
+    <div class="davinci-bg-grid"></div>
+
+    <!-- Sacred Geometry Blueprint Lines -->
+    <svg class="davinci-lines-svg" viewBox="0 0 1440 900" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="50%" stop-color="#e0f2fe"/>
+          <stop offset="100%" stop-color="#94a3b8"/>
+        </linearGradient>
+      </defs>
+      <circle cx="720" cy="450" r="380" class="circle-concentric"/>
+      <circle cx="720" cy="450" r="240" class="circle-golden-ratio"/>
+      <line x1="0" y1="450" x2="1440" y2="450" class="line-dashed"/>
+      <line x1="720" y1="0" x2="720" y2="900" class="line-dashed"/>
+      <path d="M 120 150 C 450 50, 990 850, 1320 750" class="line-dashed-fast"/>
+    </svg>
+
+    <div class="section-container">
+      <div class="section-header">
+        <div class="section-eyebrow">
+          <span>CHAPTER III</span>
+          <span>•</span>
+          <span>RELICS OF THE SIEGE</span>
+        </div>
+        <h2 class="section-title">THE TRIAD OF WAR</h2>
+        <p class="section-desc">
+          Artifacts recovered from the shores of Ilion. Each construct embodies a philosophical pillar of the decade-long confrontation between mortal genius and Olympian wrath.
+        </p>
+      </div>
+
+      <div class="artifacts-grid">
+        <!-- 1. The Helmet -->
+        <article class="artifact-card-3d" data-relic="helmet">
+          <div class="card-media-wrapper">
+            <span class="card-tag-badge">RELIC 01 // ARES</span>
+            <img src="./helmet.jpg" alt="Corinthian Helmet on golden beach meeting waves" loading="lazy">
+          </div>
+          <div class="card-details">
+            <div class="card-header-box">
+              <div class="card-code">SPEC: CORINTHIAN // ATROPOS</div>
+              <h3 class="card-title">The Spartan Helm</h3>
+              <p class="card-lore">
+                Washed upon the desolate sands of Troy. The crest represents not mere protection, but the armor of identity worn against the erosion of time.
+              </p>
+            </div>
+            <div class="card-footer-box">
+              <span class="blueprint-coords">LAT 39.957° N // LON 26.238° E</span>
+              <span class="card-action-btn">Inspect Relic →</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2. The Trojan Horse -->
+        <article class="artifact-card-3d" data-relic="horse">
+          <div class="card-media-wrapper">
+            <span class="card-tag-badge">RELIC 02 // PROMETHEUS</span>
+            <img src="./horse.jpg" alt="Colossal Trojan Horse rearing in twilight sky" loading="lazy">
+          </div>
+          <div class="card-details">
+            <div class="card-header-box">
+              <div class="card-code">SPEC: DUKIOS // TIMBER HOLLOW</div>
+              <h3 class="card-title">The Trojan Construct</h3>
+              <p class="card-lore">
+                The supreme manifestation of deception. A hollow timber titan engineered to bypass physical fortifications by targeting psychological hubris.
+              </p>
+            </div>
+            <div class="card-footer-box">
+              <span class="blueprint-coords">SCALE 1:1 // 70MM PANAVISION</span>
+              <span class="card-action-btn">Inspect Relic →</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3. The Warrior -->
+        <article class="artifact-card-3d" data-relic="warrior">
+          <div class="card-media-wrapper">
+            <span class="card-tag-badge">RELIC 03 // ODYSSEUS</span>
+            <img src="./warrior.jpg" alt="Greek Warrior gazing into foggy mountains with bone crest" loading="lazy">
+          </div>
+          <div class="card-details">
+            <div class="card-header-box">
+              <div class="card-code">SPEC: POLYTROPOS // NOSTOS</div>
+              <h3 class="card-title">The Wandering Tactician</h3>
+              <p class="card-lore">
+                Odysseus confronting the abyss. A man of cunning intellect navigating supernatural currents, cursed to wander until every companion is claimed by fate.
+              </p>
+            </div>
+            <div class="card-footer-box">
+              <span class="blueprint-coords">STATUS: DRIFTING // 10 YEARS</span>
+              <span class="card-action-btn">Inspect Relic →</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECTION 3: CHAPTER IV • CONNECTED KNOWLEDGE & LORE NETWORK
+       ========================================================================= -->
+  <section class="connection-network-container" id="skillsSection" style="position:relative;z-index:30;background:var(--bg-dark,#07080a);">
+    <div class="section-header" style="position: relative; z-index: 10;">
+      <div class="section-eyebrow">
+        <span>CHAPTER IV</span>
+        <span>•</span>
+        <span>DA VINCI SACRED MATRIX</span>
+      </div>
+      <h2 class="section-title">THE ARCHITECTURAL NETWORK</h2>
+      <p class="section-desc">
+        Click and explore interconnected nodes of myth, non-linear physics, and cinematic craft.
+      </p>
+    </div>
+
+    <!-- Dynamic Connection Lines SVG Canvas -->
+    <svg id="skillsSvgOverlay" class="connection-svg"></svg>
+
+    <!-- Interactive Concept Nodes List -->
+    <div class="skills-tag-list" id="skillsTagList">
+      <div class="skill-tag-node" data-tag-id="chronos">
+        <button class="skill-tag-pill" type="button">
+          <span class="pulse-dot"></span>
+          <span class="tag-prefix">/chronos</span>
+          <span>Non-Linear Flow</span>
+          <svg class="tag-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+        </button>
+      </div>
+
+      <div class="skill-tag-node" data-tag-id="ithaca">
+        <button class="skill-tag-pill" type="button">
+          <span class="pulse-dot"></span>
+          <span class="tag-prefix">/ithaca</span>
+          <span>Coordinates of Nostos</span>
+          <svg class="tag-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+        </button>
+      </div>
+
+      <div class="skill-tag-node" data-tag-id="70mm">
+        <button class="skill-tag-pill" type="button">
+          <span class="pulse-dot"></span>
+          <span class="tag-prefix">/70mm</span>
+          <span>IMAX Large Format</span>
+          <svg class="tag-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+        </button>
+      </div>
+
+      <div class="skill-tag-node" data-tag-id="penelope">
+        <button class="skill-tag-pill" type="button">
+          <span class="pulse-dot"></span>
+          <span class="tag-prefix">/penelope</span>
+          <span>The Unwoven Shroud</span>
+          <svg class="tag-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+        </button>
+      </div>
+
+      <div class="skill-tag-node" data-tag-id="sirens">
+        <button class="skill-tag-pill" type="button">
+          <span class="pulse-dot"></span>
+          <span class="tag-prefix">/sirens</span>
+          <span>Acoustic Frequency</span>
+          <svg class="tag-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+        </button>
+      </div>
+
+      <div class="skill-tag-node" data-tag-id="trojan">
+        <button class="skill-tag-pill" type="button">
+          <span class="pulse-dot"></span>
+          <span class="tag-prefix">/trojan</span>
+          <span>Tactical Deception</span>
+          <svg class="tag-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECTION 4: CHAPTER V • DIRECTOR'S VAULT
+       ========================================================================= -->
+  <section class="vault-section" id="vaultSection">
+    <div class="section-container">
+      <div class="vault-feature-grid">
+        <div class="vault-media-frame">
+          <img src="./odyssey 2.jpeg" alt="Odysseus bow illuminated by divine light with Greek Trireme galley" loading="lazy">
+        </div>
+        <div class="vault-content-box">
+          <div class="section-eyebrow" style="justify-content: flex-start;">
+            <span>CHAPTER V</span>
+            <span>•</span>
+            <span>PRODUCTION VAULT</span>
+          </div>
+          <h3>THE ILLUMINATED VISION</h3>
+          <p>
+            "Homer’s Odyssey is the original blueprint of cinematic storytelling. By shooting across real Mediterranean locations with massive 15-perf 70mm photochemical celluloid and physical trireme vessels, we invite the audience to step into the harrowing myth as if it were happening today."
+          </p>
+          <ul class="vault-specs-list">
+            <li class="spec-item">
+              <div class="spec-title">PRIMARY CAMERAS</div>
+              <div class="spec-value">IMAX MSM 9802 & MKIV</div>
+            </li>
+            <li class="spec-item">
+              <div class="spec-title">ASPECT RATIOS</div>
+              <div class="spec-value">1.43:1 & 2.20:1 EXPANDED</div>
+            </li>
+            <li class="spec-item">
+              <div class="spec-title">SCORE & SOUNDSCAPE</div>
+              <div class="spec-value">HANS ZIMMER / GÖRANNSON</div>
+            </li>
+            <li class="spec-item">
+              <div class="spec-title">RELEASE DATE</div>
+              <div class="spec-value">JULY 17, 2026</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INFORMATION & LORE MODAL -->
+  <div class="modal-overlay" id="infoModal" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close Modal" type="button">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      <div class="modal-body">
+        <h3 id="modalTitle" style="font-family: var(--font-cinematic); font-size: 1.8rem; color: #ffffff; margin-bottom: 16px; letter-spacing: 0.1em;"></h3>
+        <div id="modalBody"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" style="position:relative;z-index:30;background:var(--bg-dark,#07080a);">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h2>THE ODYSSEY</h2>
+        <p>SYNCAES MEDIA // SYNCOPY FILMS // WARNER BROS. PICTURES</p>
+      </div>
+      <div class="imax-badge">
+        <span class="dot"></span>
+        <span>DEFY THE GODS • 07.17.26</span>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 SYNCOPY INC. ALL RIGHTS RESERVED.</span>
+      <span>DESIGNED IN THE SPIRIT OF DA VINCI & 70MM CELLULOID.</span>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="./js/bow-physics.js"></script>
+  <script src="./js/scroll-video.js"></script>
+  <script src="./js/davinci-lines.js"></script>
+  <script src="./js/main.js"></script>
+</body>
+</html>
