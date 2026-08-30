@@ -1,6 +1,6 @@
 /**
- * THE ODYSSEY - FULL 100% BIDIRECTIONAL SCROLL VIDEO CONTROLLER
- * Controls video forward/reverse scrubbing with scroll up/down, title cards & sequential section reveal
+ * THE ODYSSEY - HIGH-PERFORMANCE 60FPS DUAL-MODE SCROLL VIDEO CONTROLLER
+ * Uses hardware-accelerated forward streaming & non-blocking reverse seek for butter-smooth scrubbing
  */
 
 class ScrollVideoController {
@@ -29,17 +29,17 @@ class ScrollVideoController {
     this.currentReelIndex = 0;
     this.isAudioMuted = true;
     
-    // Bidirectional scrubbing state
+    // Smoothing & Scrubbing Physics State
     this.targetProgress = 0;
     this.smoothProgress = 0;
     this.targetTime = 0;
-    this.smoothTime = 0;
     this.isSeeking = false;
     this.lastSeekTime = 0;
-    this.scrollVelocity = 0;
     this.lastScrollY = 0;
     this.lastScrollTimestamp = performance.now();
-    this.scrollTimeout = null;
+    this.scrollVelocity = 0;
+    this.isPlayingForward = false;
+    this.idleTimeout = null;
     
     this.init();
   }
@@ -47,13 +47,13 @@ class ScrollVideoController {
   init() {
     if (!this.video || !this.cinemaTrack) return;
     
-    // Video configuration for instant hardware frame seeking
+    // Configure video for maximum hardware-accelerated playback
     this.video.muted = true;
     this.video.playsInline = true;
     this.video.preload = 'auto';
-    this.video.pause(); // keep paused so scroll dictates exact frames bidirectionally
+    this.video.pause();
     
-    // Non-blocking seek event listeners
+    // Seek tracking locks
     this.video.addEventListener('seeked', () => {
       this.isSeeking = false;
     });
@@ -106,22 +106,26 @@ class ScrollVideoController {
     const windowH = window.innerHeight;
     const maxTrackScroll = Math.max(1, trackH - windowH);
     
-    // Progress through the cinema track (0.0 at top to 1.0 at video end)
+    // Progress through the cinema track (0.0 to 1.0)
     const trackScrolled = -rect.top;
     this.targetProgress = Math.max(0, Math.min(1, trackScrolled / maxTrackScroll));
     
-    clearTimeout(this.scrollTimeout);
-    this.scrollTimeout = setTimeout(() => {
+    clearTimeout(this.idleTimeout);
+    this.idleTimeout = setTimeout(() => {
       this.scrollVelocity = 0;
-    }, 150);
+      if (this.video && !this.video.paused) {
+        this.video.pause();
+        this.isPlayingForward = false;
+      }
+    }, 120);
   }
   
   rafLoop() {
-    // 1. Bidirectional Lerp
-    const lerpFactor = 0.18;
+    // 1. Silky Smooth Spring Interpolation
+    const lerpFactor = this.scrollVelocity > 1.5 ? 0.22 : 0.15;
     this.smoothProgress += (this.targetProgress - this.smoothProgress) * lerpFactor;
     
-    // 2. Landing Image Layer fade out on first 12% of cinema track scroll
+    // 2. Landing Image Layer Fade
     if (this.imageLayer) {
       if (this.smoothProgress <= 0.02) {
         this.imageLayer.style.opacity = '1';
@@ -153,35 +157,65 @@ class ScrollVideoController {
       }
     }
     
-    // 3. Bidirectional video scrub — throttled to 120ms to prevent decoder lag
+    // 3. High-Performance Dual-Mode 60FPS Video Scrubbing
     if (this.video && this.video.duration && !isNaN(this.video.duration)) {
-      // video plays from 0→100% across 8%→100% of cinema track scroll
       const videoProg = Math.max(0, Math.min(1, (this.smoothProgress - 0.08) / 0.92));
       this.targetTime = videoProg * this.video.duration;
       
-      // Lerp smoothTime towards targetTime
-      this.smoothTime += (this.targetTime - this.smoothTime) * 0.22;
-      
+      const timeDiff = this.targetTime - this.video.currentTime;
       const now = performance.now();
-      const timeDiff = Math.abs(this.video.currentTime - this.smoothTime);
       
-      // Only seek if: not already seeking, meaningful time gap, and throttled to 120ms
-      if (!this.isSeeking && timeDiff > 0.08 && (now - this.lastSeekTime > 120)) {
-        try {
+      // MODE A: FORWARD SCRUBBING (Hardware Accelerated Smooth Streaming)
+      if (timeDiff > 0.04) {
+        if (timeDiff > 1.2) {
+          // Fast jump for large sudden scroll jumps
+          if (!this.isSeeking && (now - this.lastSeekTime > 40)) {
+            if ('fastSeek' in this.video) {
+              this.video.fastSeek(this.targetTime);
+            } else {
+              this.video.currentTime = this.targetTime;
+            }
+            this.lastSeekTime = now;
+          }
+        } else {
+          // Dynamic adaptive rate playback (Butter-smooth 60fps hardware decoding)
+          const adaptiveRate = Math.max(0.5, Math.min(4.0, timeDiff * 4.5));
+          this.video.playbackRate = adaptiveRate;
+          
+          if (this.video.paused) {
+            this.video.play().catch(() => {});
+            this.isPlayingForward = true;
+          }
+        }
+      }
+      // MODE B: REVERSE SCRUBBING (Smooth Non-Blocking Seeking)
+      else if (timeDiff < -0.04) {
+        if (!this.video.paused) {
+          this.video.pause();
+          this.isPlayingForward = false;
+        }
+        
+        if (!this.isSeeking && (now - this.lastSeekTime > 35)) {
           if ('fastSeek' in this.video) {
-            this.video.fastSeek(this.smoothTime);
+            this.video.fastSeek(this.targetTime);
           } else {
-            this.video.currentTime = this.smoothTime;
+            this.video.currentTime = this.targetTime;
           }
           this.lastSeekTime = now;
-        } catch (e) { /* ignore */ }
+        }
+      }
+      // MODE C: IDLE / CONVERGED
+      else {
+        if (!this.video.paused && !this.isPlayingForward) {
+          this.video.pause();
+        }
       }
       
       if (this.scrollProgressText) {
         this.scrollProgressText.textContent = `REEL SYNC: ${Math.round(videoProg * 100)}%`;
       }
       
-      // 4. Nolan title cards across video timeline
+      // 4. Nolan Title Cards Active Milestones
       if (this.titleCards[0]) {
         this.titleCards[0].classList.toggle('active', videoProg >= 0.15 && videoProg < 0.42);
       }

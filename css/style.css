@@ -306,6 +306,8 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 5;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 /* Video Layer (Pinned in sticky viewport, then scrolls up after end) */
@@ -326,6 +328,9 @@ body {
   object-fit: cover;
   object-position: center;
   display: block;
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .cinema-ambient-vignette {
